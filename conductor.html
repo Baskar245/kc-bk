@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Status</title>
+  <script>
+    function updateLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          document.getElementById("lat").value = position.coords.latitude;
+          document.getElementById("lng").value = position.coords.longitude;
+          alert("Location captured!");
+        }, function(error) {
+          alert("Error getting location: " + error.message);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Bus: {{ bus_name }}</h2>
+  <form method="POST">
+    <label>Status:</label><br>
+    <select name="status">
+      <option value="on time">On Time</option>
+      <option value="late">Late</option>
+      <option value="cancelled">Cancelled</option>
+      <option value="not working">Not Working</option>
+    </select><br><br>
+
+    <input type="hidden" name="lat" id="lat">
+    <input type="hidden" name="lng" id="lng">
+
+    <button type="button" onclick="updateLocation()">Update Location</button>
+    <br><br>
+    <button type="submit">Update</button>
+  </form>
+
+  <br><a href="/logout">Logout</a>
+</body>
+</html>
